@@ -1,21 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Exploreur</title>
-	
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<title>index</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
+
 
     <section>
 
     
        
-    <form action="index.php" method="POST">
-
-        <input type="submit" name="retour" value="retour " class="btn btn-default" >
-    </form>
+   
    
 
 
@@ -55,6 +52,17 @@
   
     </form>
   </div>
+    <div class="form-group form-inline mx-auto">
+    <form action="index.php" method="POST" class="mx-auto">
+        <label for="text" >Renommer dossier ou fichier</label><br>
+        <label for="text">Ancien nom</label>
+        <input type="text" name="text5" id="text"  placeholder="Nom dossier" class="form-control input-lg-4  inp" ><br>
+        <label for="text">Nouveau nom</label>
+        <input type="text" name="text6" id="text"  placeholder="Nom dossier" class="form-control input-lg-4  inp" ><br>
+        <input type="submit" name="sub6" class="btn btn-primary">
+  
+    </form>
+        </div>
     <table class="table table-striped table-bordered table-hover">
   <thead>
     <tr>
@@ -70,12 +78,127 @@
 <?php
 
 
-//variable qui contient le repertoire courant
-$dir = "./";
-$dir1 = "../";
-$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-echo $actual_link;
 
+
+
+
+
+
+  
+        $racine='./index.php';      //on stock le chemin vers la racine
+
+   //on initialise path
+    $path="";
+        echo "<a href='$racine'> Racine</a>";
+        
+    if(sizeof($_GET) != 0) 
+    	{
+    		$path = 
+    		$_GET["path"];
+		}
+
+    if(strlen($path)==0) $path=".";
+    else if ($path !=".") 
+    {
+        $parent_dir = substr($path,0,strrpos($path,"/")); //contient le dossier précédemment visité
+
+   
+           
+            echo "<a href='./index.php?path=$parent_dir'><img src='retour.png'></a>"; //lien vers le dossier précédent
+
+        ?>
+            
+    <?php
+    }
+    // on ouvre le dossier et on le parcourt
+    $dir = opendir($path);
+    $directories=array();
+    $files=array();
+    while($file = readdir($dir)) 
+    {
+        if($file != "." && $file != "..") 
+        {
+            // on stock les dossiers et les fichiers dans deux variables différentes
+            if(is_dir("$path/$file"))
+            {
+                $directories[]="$file";
+            }
+            else $files[]="$file";  
+        }
+    }
+    // on tri le tableau directories
+        if(isset($directories))
+            { 
+                sort($directories);
+                foreach($directories as $d) //on parcourt le tableau et on l'affiche
+                {
+                                  //avec un icône pour les dossiers
+                    echo "<tr><th scope='row'><a href='./index.php?path=$path/$d'><img src='dossier3.png'><br>$d</a></th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>" ."</td>"." <td></td></tr>"; 
+                     //et un lien vers les sous dossiers
+                ?>
+                  
+                <?php
+                }
+            }
+
+
+  // on trie les fichoers dans l'ordre alphabétique
+        if(isset($files))
+        {
+            sort($files);
+        if($files!= 'index.php')
+        {
+            foreach($files as $files2)
+ 
+            {
+                 $extension = pathinfo($files2, PATHINFO_EXTENSION);
+                
+                 if ($extension=="pdf")
+                  {
+                      echo "<tr><th scope='row'><a href=\"$path/$files2\" > <img src='pdf.png'><br> $files2 </a>
+                </th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>" .filesize($path.'/'.$files2). " bytes</td>"." <td></td></tr>";
+                   
+                 }
+
+                 elseif ($extension == "png"  || $extension =="jpg"|| $extension =="JPG" || $extension =="jpeg" || $extension =="ico" )
+                  {
+
+                  
+                      echo "<tr><th scope='row'><a href=\"$path/$files2\" > <img src='img.png'><br> $files2 </a>
+                </th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>" .filesize($path.'/'.$files2). " bytes</td>"." <td></td></tr>";
+                   
+                 }
+                  elseif ($extension == "mp3" )
+                  {
+
+                  
+                      echo "<tr><th scope='row'><a href=\"$path/$files2\" > <img src='mp3.png'><br> $files2 </a>
+                </th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>" .filesize($path.'/'.$files2). " bytes</td>"." <td></td></tr>";
+                   
+                 }
+                  elseif ($extension == "doc" || $extension == "docx" )
+                  {
+
+                  
+                      echo "<tr><th scope='row'><a href=\"$path/$files2\" > <img src='doc.png'><br> $files2 </a>
+                </th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>" .filesize($path.'/'.$files2). " bytes</td>"." <td></td></tr>";
+                   
+                 }
+
+
+                 else if ( $extension!="pdf" && "png" && "jpg"&& "JPG" && "jpeg" && "mp3" && "ico" && "doc" && "docx")
+                     {
+                echo "<tr><th scope='row'><a href=\"$path/$files2\" > <img src='fichier.png'><br> $files2 </a>
+                </th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>" .filesize($path.'/'.$files2). " bytes</td>"." <td></td></tr>";}           //ouverture du fichier dans une nouvelle fenêtre
+            
+            }
+        }   
+        }
+        //on ferme la lecture dossier
+    closedir($dir); 
+
+?>
+<?php 
 
 
 //creation de fichier
@@ -132,11 +255,12 @@ if (isset( $_POST['sub'] ))
             }
 
 
+         
             if (isset( $_POST['sub3'] ))
 
 {
 
- 
+
                 // supprimer dossier
 
                 //verifier si le repertoire existe déjàt
@@ -154,134 +278,43 @@ if (isset( $_POST['sub'] ))
             }
 
 
+ //renommage fichier ou dossier
+            if (isset( $_POST['sub6'] ))
+
+{
 
 
- if (isset( $_POST['retour'] ))
- {
-
-    if (is_dir($dir1)) {
-     //ouvre le dossier racine
-     if ($dossier = opendir($dir1) ) {
-         //lit le dossier racine 
-         while (($file = readdir($dossier)) !== false) {
-               //Pour ne pas affichier les fichiers systèmes .(dossier courant) et  notre fichier index.php
-             if( $file != '.' && $file != 'index.php' && $file != '..' ) {
-            // affiche sous forme de liens les 
-
-  if (filetype("../".$file)=="dir") 
-                {
-                   
-            echo '<tr><th scope="row">
-
-
-<a href ="../'.$file.'"><img src="dossier3.png"><br>'.$file."</a></th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>" .filesize("../".$file). 'bytes </td>'.'  <td></td></tr>';
             
-                }
 
-                else
+               
+                if(is_dir( $_POST['text5']))
                 {
-                     $extension = pathinfo("../".$file, PATHINFO_EXTENSION);
-                     if ($extension=="pdf") {
-                         echo '<tr><th scope="row">
-
-<a href ="../'.$file.'"><img src="pdf.png"><br>'.$file."</a></th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>".filesize("../".$file). '         bytes</td>'.' <td></td></tr>';
-                     }
-                      elseif ($extension == "png"  || $extension =="jpg" || $extension =="jpeg" || $extension =="ico" ) {
-                          echo '<tr><th scope="row">
-
-
-<a href ="../'.$file.'"><img src="img.png"><br>'.$file."</a></th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>".filesize("../".$file). '         bytes</td>'.' <td></td></tr>';
-                     }
-                     else if ($extension=="mp3") {
-                         echo '<tr><th scope="row">
-
-<a href ="../'.$file.'"><img src="mp3.png"><br>'.$file."</a></th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>".filesize("../".$file). '         bytes</td>'.' <td></td></tr>';
-                     }
-                     else if ( $extension!="pdf" && "png" && "jpg" && "jpeg" && "mp3" && "ico")
-                     {
-                     echo '<tr><th scope="row">
-
-
-<a href ="../'.$file.'"><img src="fichier.png"><br>'.$file."</a></th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>" .filesize("../".$file). ' bytes</td>'.' <td></td></tr>';
-}
-
+                    if (is_dir( $_POST['text6']))
+                    {
+                          echo'le nom '.$_POST['text6'].'existe deja';
+                    }
+                    else
+                    {
+                     rename( $_POST['text5'],$_POST['text6']);
+   
+                    }
                 }
-            
-         }
- }
-  //Ferme la connextion au dossier
-         closedir($dossier);
-     }
+                    else
+                    {
+                       echo'le nom '.$_POST['text5'].'n\'existe deja';   
+                    }
+      
+               
 
-
-
- }
- }
-
-// Test si c'est un dossier
-else if (is_dir($dir)) {
-	//ouvre le dossier racine
-    if ($dossier = opendir($dir) ) {
-    	//lit le dossier racine 
-        while (($file = readdir($dossier)) !== false) {
-        //Pour ne pas affichier les fichiers systèmes . & ..(dossier courant & dossier parent)  et  notre fichier index.php
-        	if( $file != '.' && $file != 'index.php' &&$file != '..' ) {
-        // affiche sous forme de liens  puis les trie en dossier ou en fichier pour leur attribuer des icones specifiques
-
-                if (filetype($file)=="dir") 
-                {
-                   
-            echo ' <tr><th scope="row">
-
-
-<a href ="./'.$file.'"><img src="dossier3.png"><br>'.$file."</a></th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>".filesize($file). '         bytes </td>'.'  <td></td></tr>';
-            
-                }
-                else
-                {
-                    $extension = pathinfo($file, PATHINFO_EXTENSION);
-                     if ($extension=="pdf") {
-                         echo '<tr><th scope="row">
-
-<a href ="./'.$file.'"><img src="pdf.png"><br>'.$file."</a></th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>".filesize($file). '         bytes</td>'.'  <td></td></tr>';
-                     }
-                      elseif ($extension == "png"  || $extension =="jpg" || $extension =="jpeg" || $extension =="ico" ) {
-                          echo '<tr><th scope="row">
-
-<a href ="./'.$file.'"><img src="img.png"><br>'.$file."</a></th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>".filesize($file). '         bytes</td>'.'  <td></td></tr>';
-                     }
-                     else if ($extension=="mp3") {
-                         echo '<tr><th scope="row">
-
-<a href ="./'.$file.'"><img src="mp3.png"><br>'.$file."</a></th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>".filesize($file). '         bytes</td>'.'  <td></td></tr>';
-                     }
-                     elseif ($extension !="pdf" && "png" && "jpg" && "jpeg" && "mp3") {
-                     
-
-                     echo '<tr><th scope="row">
-
-<a href ="./'.$file.'"><img src="fichier.png"><br>'.$file."</a></th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>".filesize($file). '         bytes</td>'.'  <td></td></tr>';
-
-                }
-            }
-
-        }
-        }
-        //Ferme 
-        closedir($dossier);
-    }
-
-
-}
+               
+            } ?>
 
 
 
 
-?>
-</tr>
+	</tr>
   </tbody>
 </table>
 
-</section>
 </body>
 </html>
