@@ -11,10 +11,6 @@
     <section>
 
     
-       
-   
-   
-
 
 
     <br>
@@ -63,6 +59,16 @@
   
     </form>
         </div>
+
+        <div>
+         
+             <form action="index.php" method="post" enctype="multipart/form-data">
+                 <label for="">Dossier ou Fichier</label>
+                 <input type="file" name="file" id="file"><br><br>
+                 <input type="submit" value="Uploader" class="btn btn-secondary" name="upload" >
+             
+          </form>
+        </div>
     <table class="table table-striped table-bordered table-hover">
   <thead>
     <tr>
@@ -73,13 +79,137 @@
      </thead>
   <tbody>
 
-	
-
-<?php
 
 
+<?php 
 
 
+//creation de fichier
+
+if (isset( $_POST['sub2'] ))
+
+{
+       if(file_exists($_POST['fichier']))
+                {
+                    echo'le fichier existe déjà';
+                }
+                else
+                {
+
+   
+file_put_contents($_POST['fichier'],"");
+}
+}
+
+//suppresion fichier
+
+if (isset( $_POST['sub4'] ))
+
+{
+       if(file_exists($_POST['fichier2']))
+                {
+                    unlink($_POST['fichier2']);
+                }
+                else{
+                echo "le fichier n\'existe pas";
+                }
+}
+
+//creation dossier
+if (isset( $_POST['sub'] ))
+
+{
+
+ 
+                // Le nom du dossier à créer
+
+                //verifier si le repertoire existe déjàt
+                if(is_dir( $_POST['text']))
+                {
+                    echo'le repertoire existe déjà';
+                }
+
+                //création d'un nouveau dossier
+                else
+                {
+                    mkdir( $_POST['text']);
+                    echo'le dossier '.$_POST['text'].' vient d\'etre créé';
+                }
+            }
+
+
+         
+            if (isset( $_POST['sub3'] ))
+
+{
+
+
+                // supprimer dossier
+
+                //verifier si le repertoire existe déjàt
+                if(is_dir( $_POST['text3']))
+                {rmdir( $_POST['text3']);
+                    echo'le repertoire '.$_POST['text3'].' vient d\'etre supprimé';
+                }
+
+                //affiche le dossier supprimer
+                else
+                {
+                    
+                    echo'le dossier '.$_POST['text3'].' n\'existe pas';
+                }
+            }
+
+
+ //renommage fichier ou dossier
+            if (isset( $_POST['sub6'] ))
+
+{
+
+
+            
+
+               
+                if(is_dir( $_POST['text5']))
+                {
+                    if (is_dir( $_POST['text6']))
+                    {
+                          echo'le nom '.$_POST['text6'].'existe deja';
+                    }
+                    else
+                    {
+                     rename( $_POST['text5'],$_POST['text6']);
+   
+                    }
+                }
+                    else
+                    {
+                       echo'le nom '.$_POST['text5'].'n\'existe deja';   
+                    }
+                
+
+               
+            }
+
+           
+
+//upload
+            if (isset($_POST['upload'])){
+    $fichier = $_FILES['file']['name'];
+    $taille_max = 297152;
+    $taille = filesize($_FILES['file']['tmp_name']);
+   
+   
+    if ($taille > $taille_max){
+        $error = '<div class="alert">Fichier trop volumineux ...</div>';
+    }
+    if (!isset($error)){
+       
+        move_uploaded_file($_FILES['file']['tmp_name'], "upload/".$fichier);
+    } else {
+        echo $error;
+    }
+}
 
 
 
@@ -198,116 +328,6 @@
     closedir($dir); 
 
 ?>
-<?php 
-
-
-//creation de fichier
-
-if (isset( $_POST['sub2'] ))
-
-{
-       if(file_exists($_POST['fichier']))
-                {
-                    echo'le fichier existe déjà';
-                }
-                else
-                {
-
-   
-file_put_contents($_POST['fichier'],"");
-}
-}
-
-//suppresion fichier
-
-if (isset( $_POST['sub4'] ))
-
-{
-       if(file_exists($_POST['fichier2']))
-                {
-                    unlink($_POST['fichier2']);
-                }
-                else{
-                echo "le fichier n\'existe pas";
-                }
-}
-
-//creation dossier
-if (isset( $_POST['sub'] ))
-
-{
-
- 
-                // Le nom du dossier à créer
-
-                //verifier si le repertoire existe déjàt
-                if(is_dir( $_POST['text']))
-                {
-                    echo'le repertoire existe déjà';
-                }
-
-                //création d'un nouveau dossier
-                else
-                {
-                    mkdir( $_POST['text']);
-                    echo'le dossier '.$_POST['text'].' vient d\'etre créé';
-                }
-            }
-
-
-         
-            if (isset( $_POST['sub3'] ))
-
-{
-
-
-                // supprimer dossier
-
-                //verifier si le repertoire existe déjàt
-                if(is_dir( $_POST['text3']))
-                {rmdir( $_POST['text3']);
-                    echo'le repertoire '.$_POST['text3'].' vient d\'etre supprimé';
-                }
-
-                //affiche le dossier supprimer
-                else
-                {
-                    
-                    echo'le dossier '.$_POST['text3'].' n\'existe pas';
-                }
-            }
-
-
- //renommage fichier ou dossier
-            if (isset( $_POST['sub6'] ))
-
-{
-
-
-            
-
-               
-                if(is_dir( $_POST['text5']))
-                {
-                    if (is_dir( $_POST['text6']))
-                    {
-                          echo'le nom '.$_POST['text6'].'existe deja';
-                    }
-                    else
-                    {
-                     rename( $_POST['text5'],$_POST['text6']);
-   
-                    }
-                }
-                    else
-                    {
-                       echo'le nom '.$_POST['text5'].'n\'existe deja';   
-                    }
-      
-               
-
-               
-            } ?>
 
 
 
