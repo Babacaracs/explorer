@@ -1,28 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>index</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<title>Exploreur</title>
+	   
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script>
+  function div1() {
+    var x = document.getElementById("div1");
+    if (x.style.display == "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+}
+
+function div2() {
+    var x = document.getElementById("div2");
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+}
+function div3() {
+    var x = document.getElementById("div3");
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+}
+function div4() {
+    var x = document.getElementById("div4");
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+}
+function div5() {
+    var x = document.getElementById("div5");
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+}
+function div6() {
+    var x = document.getElementById("div6");
+    if (x.style.display === "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+}
+
+
+
+
+</script>
 </head>
 <body>
+<section class="container" id="te">
+ <div class="container mx-auto" id="menu">
 
+<img id="img1" onclick="div1()" class="img-fluid" src="img/add.png" alt="ajouter dossier">
+<img id="img2" onclick="div2()" class="img-fluid" src="img/del11.png" alt="supprimer dossier">
+<img id="img3" onclick="div3()" class="img-fluid" src="img/add21.png" alt="ajouter fichier">
+<img id="img4" onclick="div4()" class="img-fluid" src="img/del21.png" alt="supprimer fichier">
+<img id="img5" onclick="div5()" class="img-fluid" src="img/ren.png" alt="renmmer fichier ou dossier">
+<img id="img6" onclick="div6()" class="img-fluid" src="img/upload.png" alt="upload fichier ou dossier">
 
-    <section>
-
-    
-
-
-    <br>
-    <br>
-
+</div>
+</section>
 <div class="form-group form-inline mx-auto">
-	<form action="index.php" method="POST" class="mx-auto">
+  <div id="div1">
+  <form action="index.php" method="POST" class="mx-auto">
         <label for="text" >Créer nouveau dossier</label><br>
-        <input type="text" name="text" id="text"  placeholder="Nom dossier" class="form-control input-lg-4  inp" ><br>
+        <input type="text" name="text" id="text"  placeholder="Nom dossier" class="form-control .col-md-3 .offset-md-3  inp" ><br>
         <input type="submit" name="sub" class="btn btn-primary">
   
     </form>
+  </div>
+    <div id="div3">
 
     <form action="index.php" method="POST" class="mx-auto">
         <label for="fichier" >Créer nouveau fichier</label><br>
@@ -32,14 +93,20 @@
   
     </form>
   </div>
+
+  </div>
+
   <div class="form-group form-inline mx-auto">
+    <div id="div2">
     <form action="index.php" method="POST" class="mx-auto">
         <label for="text" >Supprimer dossier</label><br>
-        <input type="text" name="text3" id="text"  placeholder="Nom dossier" class="form-control input-lg-4  inp" ><br>
+        <input type="text" name="text3" id="text"  placeholder="Nom dossier" class="form-control  offset-lg-
+         input-lg-4  inp" ><br>
         <input type="submit" name="sub3" class="btn btn-primary">
   
     </form>
-
+</div>
+<div id="div4">
     <form action="index.php" method="POST" class="mx-auto">
         <label for="fichier" >Supprimer fichier</label><br>
         <input type="text" name="fichier2" id="fichier"  placeholder="Nom fichier" class="form-control input-lg-4 inp" ><br>
@@ -48,7 +115,10 @@
   
     </form>
   </div>
+  </div >
+
     <div class="form-group form-inline mx-auto">
+      <div id="div5">
     <form action="index.php" method="POST" class="mx-auto">
         <label for="text" >Renommer dossier ou fichier</label><br>
         <label for="text">Ancien nom</label>
@@ -58,12 +128,13 @@
         <input type="submit" name="sub6" class="btn btn-primary">
   
     </form>
+  </div>
         </div>
 
-        <div>
+        <div id="div6">
          
              <form action="index.php" method="post" enctype="multipart/form-data">
-                 <label for="">Dossier ou Fichier</label>
+                 <label for="">Dossier ou Fichier</label><br>
                  <input type="file" name="file" id="file"><br><br>
                  <input type="submit" value="Uploader" class="btn btn-secondary" name="upload" >
              
@@ -82,6 +153,7 @@
 
 
 <?php 
+
 
 
 //creation de fichier
@@ -219,7 +291,7 @@ if (isset( $_POST['sub'] ))
 
    //on initialise path
     $path="";
-        echo "<a href='$racine'> Racine</a>";
+        echo "<a href='$racine'><img src='img/home.png'></a>";
         
     if(sizeof($_GET) != 0) 
     	{
@@ -236,9 +308,7 @@ if (isset( $_POST['sub'] ))
            
             echo "<a href='./index.php?path=$parent_dir'><img src='retour.png'></a>"; //lien vers le dossier précédent
 
-        ?>
-            
-    <?php
+      
     }
     // on ouvre le dossier et on le parcourt
     $dir = opendir($path);
@@ -265,9 +335,7 @@ if (isset( $_POST['sub'] ))
                                   //avec un icône pour les dossiers
                     echo "<tr><th scope='row'><a href='./index.php?path=$path/$d'><img src='dossier3.png'><br>$d</a></th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>" ."</td>"." <td></td></tr>"; 
                      //et un lien vers les sous dossiers
-                ?>
-                  
-                <?php
+             
                 }
             }
 
@@ -285,7 +353,7 @@ if (isset( $_POST['sub'] ))
                 
                  if ($extension=="pdf")
                   {
-                      echo "<tr><th scope='row'><a href=\"$path/$files2\" > <img src='pdf.png'><br> $files2 </a>
+                      echo "<tr><th scope='row'><a href=\"$path/$files2\" target='_blank' > <img src='pdf.png'><br> $files2 </a>
                 </th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>" .filesize($path.'/'.$files2). " bytes</td>"." <td></td></tr>";
                    
                  }
@@ -294,7 +362,7 @@ if (isset( $_POST['sub'] ))
                   {
 
                   
-                      echo "<tr><th scope='row'><a href=\"$path/$files2\" > <img src='img.png'><br> $files2 </a>
+                      echo "<tr><th scope='row'><a href=\"$path/$files2\" target='_blank'> <img src='img.png'><br> $files2 </a>
                 </th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>" .filesize($path.'/'.$files2). " bytes</td>"." <td></td></tr>";
                    
                  }
@@ -302,7 +370,7 @@ if (isset( $_POST['sub'] ))
                   {
 
                   
-                      echo "<tr><th scope='row'><a href=\"$path/$files2\" > <img src='mp3.png'><br> $files2 </a>
+                      echo "<tr><th scope='row'><a href=\"$path/$files2\" target='_blank'> <img src='mp3.png'><br> $files2 </a>
                 </th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>" .filesize($path.'/'.$files2). " bytes</td>"." <td></td></tr>";
                    
                  }
@@ -310,7 +378,7 @@ if (isset( $_POST['sub'] ))
                   {
 
                   
-                      echo "<tr><th scope='row'><a href=\"$path/$files2\" > <img src='doc.png'><br> $files2 </a>
+                      echo "<tr><th scope='row'><a href=\"$path/$files2\" target='_blank'> <img src='doc.png'><br> $files2 </a>
                 </th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>" .filesize($path.'/'.$files2). " bytes</td>"." <td></td></tr>";
                    
                  }
@@ -318,7 +386,7 @@ if (isset( $_POST['sub'] ))
 
                  else if ( $extension!="pdf" && "png" && "jpg"&& "JPG" && "jpeg" && "mp3" && "ico" && "doc" && "docx")
                      {
-                echo "<tr><th scope='row'><a href=\"$path/$files2\" > <img src='fichier.png'><br> $files2 </a>
+                echo "<tr><th scope='row'><a href=\"$path/$files2\" target='_blank'> <img src='fichier.png'><br> $files2 </a>
                 </th> <td>&nbsp;&nbsp;&nbsp;&nbsp;<br>" .filesize($path.'/'.$files2). " bytes</td>"." <td></td></tr>";}           //ouverture du fichier dans une nouvelle fenêtre
             
             }
